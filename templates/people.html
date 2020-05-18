@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block body %}
+<p class="lead">
+    {{ about_the_country }}
+  </p>
+<a class="btn btn-danger btn-lg disabled mx-6" tabindex="-1" role="button" aria-disabled="true">{{ infected }} confirmed</a>
+<a class="btn btn-primary btn-lg disabled mx-5" tabindex="-1" role="button" aria-disabled="true">{{ recovered }} Recovered</a>
+<a class="btn btn-dark btn-lg disabled mx-1" tabindex="-1" role="button" aria-disabled="true">{{ deaths }} Deaths</a>
+{% endblock %}

@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block body%}
+<a class="btn btn-danger btn-lg disabled mx-6" tabindex="-1" role="button" aria-disabled="true">{{ infected }} Infected</a>
+<a class="btn btn-primary btn-lg disabled mx-5" tabindex="-1" role="button" aria-disabled="true">{{ recovered }} Recovered</a>
+<a class="btn btn-dark btn-lg disabled mx-1" tabindex="-1" role="button" aria-disabled="true">{{ deaths }} Deaths</a>
+{% endblock %}
