@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 import requests
 from bs4 import BeautifulSoup
 import random
@@ -6,7 +6,7 @@ from status.models import CoronaVirusStatus
 import time
 
 def get_data(cname):
-    url = "https://api.covid19api.com/live/country/{}".format(cname.lower().replace(' ', '-'))
+    url = f"https://api.covid19api.com/total/country/{cname.lower()}"
     r = requests.get(url)
     data = r.json()[-1]
     return data
@@ -57,20 +57,29 @@ def data_from_database(request, cname):
         infected = h5[0].get_text()
         deaths = h5[1].get_text().split(' ')[0].replace('\n', '')
         recovered = h5[2].get_text().split(' ')[0]
-        
+
         try:
             cntry = CoronaVirusStatus.objects.get(country=cname.lower())
             cntry.infected = infected
             cntry.deaths = deaths
             cntry.recovered = recovered
-            
+
             if f"i:{cntry.infected}, d:{cntry.deaths}. r:{cntry.recovered}" not in cntry.oldinf:
                 cntry.oldinf.append(f"i:{cntry.infected}, d:{cntry.deaths}. r:{cntry.recovered}")
             cntry.save()
         except:
-            CoronaVirusStatus.objects.create(country=cname.lower(), infected=infected, deaths=deaths, recovered=recovered).save()  
+            CoronaVirusStatus.objects.create(country=cname.lower(), infected=infected, deaths=deaths, recovered=recovered).save()
     context = {"infected":infected, "deaths":deaths, "recovered":recovered, "country":cname, "page_url":cname}
     return render(request, 'people.html', context)
+
+
+def search(request):
+    if request.method == 'POST':
+        search_country = request.POST['q']
+        return redirect(f'/country/{search_country}')
+    else:
+        return redirect('/')
+
 
 
 def home(request):
