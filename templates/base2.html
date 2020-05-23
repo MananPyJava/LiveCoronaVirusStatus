@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+
+<head>
+    <title>{% block title %}{% endblock title %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="{% static 'profile-bg.webp' %}">
+    <meta name="google-site-verification" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+     <meta name="description" content= "I am Sidharth Bhardwaj, a python programmer! checkout my projects!" />
+     <meta name="keywords" content="Coronavirus, Corona, Sidharth, sidharth, sidharth programmer, Sidharth Programmer, programmer sidharth, programmersidharth, python, sidharth dav school, davschoolnarela, python programmer" />
+</head>
+<body>
+<header>
+    <nav>
+    {% if navbar_colour %}<div class="nav-wrapper {{navbar_colour.link}}">{% else %}<div class="nav-wrapper grey darken-4">{% endif %}
+    <div class='container'>
+            <a href="/" class="brand-logo">CoronaVirusStatus</a>
+            <a href="#" class="sidenav-trigger" data-target="slide_out"><i class="material-icons">menu</i></a>
+            <ul class="right hide-on-med-and-down">
+                <li ><a href="/"><i class="material-icons left">home</i>Home</a></li>
+            </ul>
+        </div>
+        </div>
+    </nav>
+   <ul class="sidenav" id="slide_out">
+     <li><div class="user-view"><div class="background"><img src="/static/background.jpg" class='responsive-img'></div>
+      <a href="#developer"><img class="circle" src="https://programmersid.pythonanywhere.com/static/profile-bg.png" class='responsive-img'></a>
+      <a href="#name"><span class="white-text name">Sidharth</span></a>
+      <a href="mailto:programmersidharth@gmail.com"><span class="white-text email">programmersidharth@gmail.com</span></a>
+    </div></li>
+     <li><a class="waves-effect {% if navbar_colour %}waves-{{ navbar_colour }}{% endif %}" href="/"><i class="material-icons left">home</i>Home</a></li>
+   </ul>
+<nav>
+    {% if navbar_colour %}
+    <div class="nav-wrapper {{navbar_colour.link}}">
+    {% else %}
+    <div class="nav-wrapper grey darken-4">
+    {% endif %}
+    <div class='container'>
+     <div class="col s12">
+          {% block breadcrumb %}{% endblock breadcrumb %}
+      </div>
+    </div>
+    </div>
+  </nav>
+  </div>
+  </header>
+<main>
+{% block body %}{% endblock body %}
+</main>
+{% if navbar_colour.link is not None %}
+        <footer class="page-footer {{navbar_colour.link}}">
+    {% else %}
+    <footer class="page-footer grey darken-4">
+    {% endif %}
+          <div class="container">
+            <div class="row">
+              <div class="col l6 s12">
+                <h5 class="white-text">LiveCoronaVirusStatus</h5>
+                <p class="grey-text text-lighten-4"></p>
+              </div>
+              <div class="col l4 offset-l2 s12">
+                <h5 class="white-text">Links</h5>
+                <ul>
+                  <li><a add target='_blank' class="grey-text text-lighten-3" href="https://github.com/Programmer-Sidharth/">Github</a></li>
+                  <li><a add target='_blank' class='grey-text text-lighten-3' href='https://instagram.com/programmer_sidharth'><i class="fa fa-instagram" style="font-size:24px"></i></a></li>
+            </ul>
+              </div>
+            </div>
+          </div>
+          <div class="footer-copyright">
+            <div class="container">
+            © 2020 Copyright
+            <a add target='_blank' class="grey-text text-lighten-4 right" href='https://programmersid.pythonanywhere.com'>Created By Ram Bhardwaj(Sidharth Bhardwaj)!</a>
+            </div>
+          </div>
+        </footer>
+    <!--<script type="text/javascript" src="js/materialize.min.js"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+      M.AutoInit();
+</script>
+<style>
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+  main {
+    flex: 1 0 auto;
+  }</style>
+</body>
+
+</html>

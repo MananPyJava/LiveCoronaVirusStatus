@@ -24,12 +24,15 @@ def country(request, cname):
         infected = int(data['Confirmed'])
         deaths = int(data['Deaths'])
         recovered = int(data['Recovered'])
-        context = {"infected":infected, "deaths":deaths, "recovered":recovered, "country":cname, 'page_url':cname.lower()}
+        active = int(data['Active'])
+        time = data['Date'][0:-10]
+        context = {"infected":infected, "deaths":deaths, "recovered":recovered, 'active':active, "country":cname, 'page_url':cname.lower(), 'time':time}
     except:
         infected = '---'
         deaths = '---'
         recovered = '---'
-        context = {"infected":infected, "deaths":deaths, "recovered":recovered, "country":f'{cname} which does not exist in our data', 'page_url':cname.lower()}
+        active = '---'
+        context = {"infected":infected, 'active':active, "deaths":deaths, "recovered":recovered, "country":f'{cname} which does not exist in our data', 'page_url':cname.lower(), 'time':'---'}
         return render(request, 'people.html', context)
     try:
         cntry = CoronaVirusStatus.objects.get(country=cname.lower())
@@ -87,5 +90,5 @@ def home(request):
     infected = int(data['TotalConfirmed'])
     deaths = int(data['TotalDeaths'])
     recovered = int(data['TotalRecovered'])
-    context = {"infected":infected, "deaths":deaths, "recovered":recovered, "country":'The Whole World'}
+    context = {"infected":infected, "deaths":deaths, "recovered":recovered, "country":'The Whole World', 'time':'today at 10:00 A.M morning'}
     return render(request, 'home.html', context)

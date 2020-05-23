@@ -20,6 +20,6 @@ import status
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home),
-    path('search', views.search),
+    path('search/', views.search),
     path('country/<str:cname>', views.country),
 ]
