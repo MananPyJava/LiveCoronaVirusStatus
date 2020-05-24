@@ -5,6 +5,7 @@ import random
 from status.models import CoronaVirusStatus
 import time
 
+
 def get_data(cname):
     url = f"https://api.covid19api.com/total/country/{cname.lower()}"
     r = requests.get(url)
@@ -14,14 +15,21 @@ def get_data(cname):
 def get_global():
     url = 'https://api.covid19api.com/summary'
     r = requests.get(url)
-    data = r.json()['Global']
-    return data
+    if 'You have reached maximum request limit' not in r.text:
+        data = r.json()['Global']
+        return data
+    else:
+        return None
 
 
 def country(request, cname):
     try:
         data = get_data(cname)
-        infected = int(data['Confirmed'])
+        try:
+            infected = int(data['Confirmed'])
+        except:
+            data = get_data(cname)
+            infected = int(data['Confirmed'])
         deaths = int(data['Deaths'])
         recovered = int(data['Recovered'])
         active = int(data['Active'])
@@ -79,6 +87,8 @@ def data_from_database(request, cname):
 def search(request):
     if request.method == 'POST':
         search_country = request.POST['q']
+        if search_country.lower() == 'global':
+            return redirect('/')
         return redirect(f'/country/{search_country}')
     else:
         return redirect('/')
@@ -87,8 +97,11 @@ def search(request):
 
 def home(request):
     data = get_global()
-    infected = int(data['TotalConfirmed'])
-    deaths = int(data['TotalDeaths'])
-    recovered = int(data['TotalRecovered'])
-    context = {"infected":infected, "deaths":deaths, "recovered":recovered, "country":'The Whole World', 'time':'today at 10:00 A.M morning'}
-    return render(request, 'home.html', context)
+    if data is not None:
+        infected = int(data['TotalConfirmed'])
+        deaths = int(data['TotalDeaths'])
+        recovered = int(data['TotalRecovered'])
+        context = {"infected":infected, "deaths":deaths, "recovered":recovered, "country":'The Whole World'}
+        return render(request, 'home.html', context)
+    else:
+        return redirect('/')
